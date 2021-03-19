@@ -1,3 +1,4 @@
+// 'thunk' will automatically pass dispatch
 import * as actionTypes from './actionTypes';
 
 export const storeResult = (result) => {
