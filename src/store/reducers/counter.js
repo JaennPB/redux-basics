@@ -1,10 +1,10 @@
-import * as actionTypes from '../actions';
+import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   counter: 0,
 };
 
-// ALWAYS UPDATE STATE ImMUTABLY BY MAKING CLONES/DEEP CLONES
+// ALWAYS UPDATE STATE IMMUTABLY BY MAKING CLONES/DEEP CLONES
 const counterReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.INCREMENT:
@@ -27,8 +27,9 @@ const counterReducer = (state = initialState, action) => {
         ...state,
         counter: state.counter - action.value,
       };
+    default:
+      return state;
   }
-  return state;
 };
 
 export default counterReducer;

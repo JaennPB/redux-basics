@@ -3,22 +3,22 @@ import { connect } from 'react-redux';
 
 import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
-import * as actionTypes from '../../store/actions';
+import * as actions from '../../store/actions/actionsIndex';
 
 class Counter extends Component {
   render() {
     return (
       <div>
         <CounterOutput value={this.props.ctr} />
-        <CounterControl label="Increment" clicked={this.props.onIncrementCounter} />
-        <CounterControl label="Decrement" clicked={this.props.onDecrementCounter} />
-        <CounterControl label="Add 5" clicked={this.props.onAdditionCounter} />
-        <CounterControl label="Subtract 5" clicked={this.props.onSubtractionCounter} />
+        <CounterControl label="Increment" clicked={this.props.increment} />
+        <CounterControl label="Decrement" clicked={this.props.decrement} />
+        <CounterControl label="Add 5" clicked={this.props.add} />
+        <CounterControl label="Subtract 5" clicked={this.props.subtract} />
         <hr />
-        <button onClick={() => this.props.onStoreResult(this.props.ctr)}>Store Results</button>
+        <button onClick={() => this.props.storeResult(this.props.ctr)}>Store Results</button>
         <ul>
           {this.props.storedResults.map((result) => (
-            <li onClick={() => this.props.onDeleteStoredResult(result.id)} key={result.id}>
+            <li onClick={() => this.props.deleteResult(result.id)} key={result.id}>
               {result.value}
             </li>
           ))}
@@ -37,17 +37,19 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onIncrementCounter: () => dispatch({ type: actionTypes.INCREMENT }),
-    onDecrementCounter: () => dispatch({ type: actionTypes.DECREMENT }),
-    // passing action payload from ui to reducer hardcoded
-    onAdditionCounter: () => dispatch({ type: actionTypes.ADD, value: 5 }),
-    onSubtractionCounter: () => dispatch({ type: actionTypes.SUBTRACT, value: 5 }),
-    // passing action payload from ui to reducer dinamically
-    onDeleteStoredResult: (id) => dispatch({ type: actionTypes.DELETE_RESULT, elId: id }),
-    onStoreResult: (result) => dispatch({ type: actionTypes.STORE_RESULT, CurrCounter: result }),
-  };
-};
+const mapDispatchToProps = actions;
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     onIncrementCounter: () => dispatch(actionCreators.increment()),
+//     onDecrementCounter: () => dispatch(actionCreators.decrement()),
+//     // passing action payload from ui to reducer hardcoded
+//     onAdditionCounter: () => dispatch(actionCreators.add()),
+//     onSubtractionCounter: () => dispatch(actionCreators.subtract()),
+//     // passing action payload from ui to reducer dinamically
+//     onStoreResult: (result) => dispatch(actionCreators.storeResult(result)),
+//     onDeleteStoredResult: (id) => dispatch(actionCreators.deleteResult(id)),
+//   };
+// };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Counter);
